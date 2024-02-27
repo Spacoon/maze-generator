@@ -1,5 +1,7 @@
 ﻿#include "App.h"
 
+#include <iostream>
+
 const bool App::IsRunning() const
 {
 	return window->isOpen();
@@ -11,7 +13,6 @@ void App::Update()
     while (window->pollEvent(event))
     {
         ImGui::SFML::ProcessEvent(event);
-
         if (event.type == sf::Event::Closed)
             window->close();
     }
@@ -64,8 +65,16 @@ void App::setWindow()
     window = new sf::RenderWindow
     (
         sf::VideoMode(CELL_SIZE * SCREEN_SIZE, CELL_SIZE * SCREEN_SIZE),
-        "Maze generator"
+        "Maze generator", sf::Style::Titlebar | sf::Style::Close
     );
+
+    sf::Image icon;
+    if (!icon.loadFromFile("..\\..\\maze-generator\\icon.png"))
+        std::cout << "File not found\n";
+    else
+    {
+        window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    }
 
     window->setFramerateLimit(60);
     ImGui::SFML::Init(*window);
@@ -184,14 +193,20 @@ void App::handleGUI()
 
 	Begin("Menu");
 
-	ColorEdit3("Background color", fbackgroundColor);
-    if (ColorEdit3("Path color", fpathColor))
-    {
-        path.setColor(sf::Color(
-            255.0f * fpathColor[0],
-            255.0f * fpathColor[1],
-            255.0f * fpathColor[2]));
-    }
+	if (CollapsingHeader("Change colors"))
+	{
+		ColorEdit3("Background color", fbackgroundColor);
+	    if (ColorEdit3("Path color", fpathColor))
+	    {
+	        path.setColor(sf::Color(
+	            255.0f * fpathColor[0],
+	            255.0f * fpathColor[1],
+	            255.0f * fpathColor[2]));
+	    }
+	}
+
+    if (Button("Exit", ImVec2(50, 20)))
+        window->close();
 
     End();
 }
@@ -218,7 +233,6 @@ void App::drawCell(const int& position, const sf::Color& color) const
 
     window->draw(cell);
 }
-
 
 const bool App::contains(const int& number, const std::vector<int>& array) const
 {

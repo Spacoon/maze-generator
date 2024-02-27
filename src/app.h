@@ -26,8 +26,8 @@ private:
 	// boundaries cells are sides of our map
 	std::vector<int> boundaries;
 
-	int CELL_SIZE = 50,
-		SCREEN_SIZE = 14;
+	int CELL_SIZE = 44,
+		SCREEN_SIZE = 22;
 	float fbackgroundColor[3] = { 0.0f, 0.0f, 0.0f },
 		  fpathColor[3] = { 1.0f, 1.0f, 1.0f };
 

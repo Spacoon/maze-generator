@@ -18,9 +18,10 @@ struct Cell
 class Path : public sf::Drawable
 {
 private:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 	std::vector<Cell> cells;
 	int endCell_y = 0;
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	int CELL_SIZE;
 	sf::Color m_color = sf::Color::White;
 
@@ -31,4 +32,3 @@ public:
 	void setColor(const sf::Color& color);
 	void addExit(const int& y_pos);
 };
-

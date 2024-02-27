@@ -10,7 +10,7 @@ void Path::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
     int x_pos, y_pos;
 
-	for (auto c : cells)
+	for (const auto& c : cells)
 	{
         x_pos = c.pos % (target.getSize().x / CELL_SIZE);
 		y_pos = c.pos / (target.getSize().y / CELL_SIZE);
@@ -99,7 +99,6 @@ void Path::draw(sf::RenderTarget& target, sf::RenderStates states) const
     fourth = sf::Vector2f(
         x_pos * CELL_SIZE - 4,
         y_pos * CELL_SIZE + CELL_SIZE - 4);
-
 
     cell.setPoint(0, first);
     cell.setPoint(1, second);
